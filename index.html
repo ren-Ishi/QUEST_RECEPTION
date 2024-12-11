@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quest Registration</title>
+</head>
+<body>
+    <button onclick="sendNotification()">クエストを登録</button>
+
+    <script>
+        async function sendNotification() {
+            try {
+                const response = await fetch('/.netlify/functions/send-notification', {
+                    method: 'POST'
+                });
+
+                if (response.ok) {
+                    alert('通知を送信しました！');
+                } else {
+                    alert('通知の送信に失敗しました。');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('エラーが発生しました。');
+            }
+        }
+    </script>
+</body>
+</html>
