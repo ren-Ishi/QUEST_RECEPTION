@@ -1,6 +1,8 @@
+require('dotenv').config();
 const fetch = require('node-fetch');
 
 exports.handler = async function(event, context) {
+  // HTTPメソッドがPOST以外の場合は405を返す
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
@@ -8,6 +10,7 @@ exports.handler = async function(event, context) {
     };
   }
 
+  // 環境変数が設定されていない場合は500エラーを返す
   const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 
   if (!DISCORD_WEBHOOK_URL) {
@@ -18,6 +21,7 @@ exports.handler = async function(event, context) {
   }
 
   try {
+    // Discordに通知を送信
     const response = await fetch(DISCORD_WEBHOOK_URL, {
       method: 'POST',
       headers: {
@@ -28,16 +32,19 @@ exports.handler = async function(event, context) {
       })
     });
 
+    // Discord APIがエラーを返した場合は詳細なエラーメッセージを表示
     if (!response.ok) {
-      console.error('Discord API error:', response.statusText);
-      throw new Error('Discord API error');
+      const errorBody = await response.text();  // Discord APIからのレスポンスを取得
+      throw new Error(`Discord API error: ${errorBody}`);
     }
 
+    // 通知送信成功
     return {
       statusCode: 200,
       body: JSON.stringify({ message: 'Notification sent successfully' })
     };
   } catch (error) {
+    // エラーが発生した場合、エラーメッセージをコンソールに出力
     console.error('Error:', error);
     return {
       statusCode: 500,
