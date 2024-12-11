@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const fetch = require('node-fetch');
 
 exports.handler = async function(event, context) {
@@ -31,6 +29,7 @@ exports.handler = async function(event, context) {
     });
 
     if (!response.ok) {
+      console.error('Discord API error:', response.statusText);
       throw new Error('Discord API error');
     }
 
@@ -42,7 +41,7 @@ exports.handler = async function(event, context) {
     console.error('Error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Failed to send notification' })
+      body: JSON.stringify({ message: 'Failed to send notification', error: error.message })
     };
   }
 };
