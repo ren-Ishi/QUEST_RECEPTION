@@ -28,7 +28,7 @@ exports.handler = async function(event, context) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        content: '新しいクエストが登録されました！冒険者の皆さん、ボードをご確認くださいませ。'
+        content: '初めまして、新人受付のマレーシャ・アデレーです！よろしくお願いいたします。'
       })
     });
 
