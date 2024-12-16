@@ -3,26 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quest Registration</title>
+    <title>ギルド1F｜受付カウンター</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
 </head>
 <body>
-    <button onclick="sendNotification()">クエストを登録</button>
-
+    <div class="img-area">
+        <img src="addre.png" alt="">
+    </div>
+    <div id="message-area">
+        <p id="receptionist-message">【新米受付】マレーシャ・アデレ</p>
+        <p id="user-message">こんにちは！本日はいかがされましたか？</p>
+        <button id="register-button" onclick="sendNotification()">クエストを登録する</button>
+    </div>
     <script>
         async function sendNotification() {
+            const receptionistMessage = document.getElementById('receptionist-message');
+            const userMessage = document.getElementById('user-message');
+            const registerButton = document.getElementById('register-button');
+
             try {
                 const response = await fetch('/.netlify/functions/send-notification', {
                     method: 'POST'
                 });
 
                 if (response.ok) {
-                    alert('通知を送信しました！');
+                    userMessage.textContent = 'ありがとうございます！クエストを登録しました。';
+                    receptionistMessage.textContent = '【受付完了】マレーシャ・アデレ';
                 } else {
-                    alert('通知の送信に失敗しました。');
+                    userMessage.textContent = 'わわ、貼り間違えちゃいました…！ごめんなさい！ギルドマスターを呼んでもらえますか…？';
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('エラーが発生しました。');
+                userMessage.textContent = 'わわ、なんだか失敗しちゃいました…！ごめんなさい！ギルドマスターを呼んでもらえますか…？';
+            } finally {
+                // ボタンを非表示にする
+                registerButton.style.display = 'none';
             }
         }
     </script>
