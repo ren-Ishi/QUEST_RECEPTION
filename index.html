@@ -20,7 +20,6 @@
     </div>
     <script>
         async function sendNotification() {
-            const receptionistMessage = document.getElementById('receptionist-message');
             const userMessage = document.getElementById('user-message');
             const registerButton = document.getElementById('register-button');
 
@@ -30,8 +29,7 @@
                 });
 
                 if (response.ok) {
-                    userMessage.textContent = 'ありがとうございます！クエストを登録しました。';
-                    receptionistMessage.textContent = '【受付完了】マレーシャ・アデレ';
+                    userMessage.textContent = '初めまして、新人受付のマレーシャ・アデレーです！';
                 } else {
                     userMessage.textContent = 'わわ、貼り間違えちゃいました…！ごめんなさい！ギルドマスターを呼んでもらえますか…？';
                 }
@@ -39,7 +37,6 @@
                 console.error('Error:', error);
                 userMessage.textContent = 'わわ、なんだか失敗しちゃいました…！ごめんなさい！ギルドマスターを呼んでもらえますか…？';
             } finally {
-                // ボタンを非表示にする
                 registerButton.style.display = 'none';
             }
         }
