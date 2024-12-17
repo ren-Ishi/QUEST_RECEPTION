@@ -28,7 +28,7 @@ exports.handler = async function(event, context) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        content: '初めまして、新人受付のマレーシャ・アデレーです！よろしくお願いいたします。'
+        content: '初めまして、新人受付のマレーシャ・アデレです！よろしくお願いいたします。'
       })
     });
 
