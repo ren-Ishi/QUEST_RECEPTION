@@ -2,7 +2,6 @@ require('dotenv').config();
 const fetch = require('node-fetch');
 
 exports.handler = async function(event, context) {
-  // HTTPメソッドがPOST以外の場合は405を返す
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
